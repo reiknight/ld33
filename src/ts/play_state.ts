@@ -2,17 +2,26 @@
 
 module ld33 {
     export class PlayState extends Phaser.State {
+        background: Phaser.Image;
         player: Phaser.Sprite;
         cursors: Phaser.CursorKeys;
         wardrobe: Phaser.Sprite;
-        PLAYER_VELOCITY: number = 100;
+        PLAYER_VELOCITY: number = 500;
 
         constructor() {
             super();
         }
 
+        init () {
+            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignVertically = true;
+            this.game.world.setBounds(0, 0, 3200, 700);
+        }
+
         preload() {
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
+            this.game.load.image('background', '/assets/background.png');
         }
 
         create() {
@@ -20,11 +29,8 @@ module ld33 {
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 300;
 
-            //Player creation
-            this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
-            this.player.anchor.setTo(0.5);
-            this.game.physics.arcade.enableBody(this.player);
-            this.player.body.collideWorldBounds = true;
+            // Add background
+            this.background = this.game.add.image(0, 0, 'background');
 
             // Add wardrobe
             this.wardrobe = this.game.add.sprite(this.game.world.width, this.game.world.height, 'wardrobe');
@@ -32,6 +38,14 @@ module ld33 {
             this.game.time.events.loop(Phaser.Timer.SECOND * 2, function () {
                 this.wardrobe.frame += 1 % 2;
             }, this);
+
+            //Player creation
+            this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
+            this.player.anchor.setTo(0.5);
+            this.game.physics.arcade.enableBody(this.player);
+            this.player.body.collideWorldBounds = true;
+
+            this.camera.follow(this.player);
 
             //Creating input
             this.cursors = this.game.input.keyboard.createCursorKeys();
