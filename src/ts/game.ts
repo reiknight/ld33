@@ -1,21 +1,16 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts"/>
+/// <reference path="play_state.ts" />
 
-class SimpleGame {
-    game: Phaser.Game;
+module ld33 {
+  export class SimpleGame extends Phaser.Game {
+      game: Phaser.Game;
 
-    constructor() {
-        this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'content', new PlayState());
-    }
+      constructor() {
+          super(800, 600, Phaser.AUTO, 'content');
+          this.state.add('play', new PlayState());
+          this.state.start('play');
+      }
+  }
 
-    preload() {
-        this.game.load.image('logo', 'phaser2.png');
-    }
-    create() {
-
-    }
-    update() {
-
-    }
+  new SimpleGame();
 }
-
-var game = new SimpleGame();

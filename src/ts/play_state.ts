@@ -1,5 +1,6 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts"/>
-module states {
+
+module ld33 {
     export class PlayState extends Phaser.State {
         player: Phaser.Sprite;
         cursors: Phaser.CursorKeys;

@@ -1,11 +1,11 @@
+/// <reference path="../../bower_components/phaser/typescript/phaser.d.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="../../bower_components/phaser/typescript/phaser.d.ts"/>
-var states;
-(function (states) {
+var ld33;
+(function (ld33) {
     var PlayState = (function (_super) {
         __extends(PlayState, _super);
         function PlayState() {
@@ -36,5 +36,5 @@ var states;
         };
         return PlayState;
     })(Phaser.State);
-    states.PlayState = PlayState;
-})(states || (states = {}));
+    ld33.PlayState = PlayState;
+})(ld33 || (ld33 = {}));
