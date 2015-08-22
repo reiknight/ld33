@@ -13,7 +13,7 @@ var ld33;
             this.PLAYER_VELOCITY = 100;
         }
         PlayState.prototype.preload = function () {
-            this.game.load.image('logo', 'phaser2.png');
+            this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
         };
         PlayState.prototype.create = function () {
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -22,11 +22,15 @@ var ld33;
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
+            this.wardrobe = this.game.add.sprite(this.game.world.width, this.game.world.height, 'wardrobe');
+            this.wardrobe.anchor.setTo(1);
+            this.game.time.events.loop(Phaser.Timer.SECOND * 2, function () {
+                this.wardrobe.frame += 1 % 2;
+            }, this);
             this.cursors = this.game.input.keyboard.createCursorKeys();
         };
         PlayState.prototype.update = function () {
             this.player.body.velocity.x = 0;
-            console.log(this.PLAYER_VELOCITY);
             if (this.cursors.left.isDown) {
                 this.player.body.velocity.x -= this.PLAYER_VELOCITY;
             }

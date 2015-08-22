@@ -4,6 +4,7 @@ module ld33 {
     export class PlayState extends Phaser.State {
         player: Phaser.Sprite;
         cursors: Phaser.CursorKeys;
+        wardrobe: Phaser.Sprite;
         PLAYER_VELOCITY: number = 100;
 
         constructor() {
@@ -11,7 +12,7 @@ module ld33 {
         }
 
         preload() {
-            this.game.load.image('logo', 'phaser2.png');
+            this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
         }
 
         create() {
@@ -25,6 +26,13 @@ module ld33 {
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
 
+            // Add wardrobe
+            this.wardrobe = this.game.add.sprite(this.game.world.width, this.game.world.height, 'wardrobe');
+            this.wardrobe.anchor.setTo(1);
+            this.game.time.events.loop(Phaser.Timer.SECOND * 2, function () {
+                this.wardrobe.frame += 1 % 2;
+            }, this);
+
             //Creating input
             this.cursors = this.game.input.keyboard.createCursorKeys();
         }
@@ -32,8 +40,6 @@ module ld33 {
         update() {
             //Checking input
             this.player.body.velocity.x = 0;
-
-            console.log(this.PLAYER_VELOCITY);
 
             if(this.cursors.left.isDown) {
                 this.player.body.velocity.x -= this.PLAYER_VELOCITY;
