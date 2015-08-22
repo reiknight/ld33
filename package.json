@@ -1,0 +1,27 @@
+{
+  "name": "ld33",
+  "version": "1.0.0",
+  "description": "LD33: You are the monster\r ==============================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reiknight/ld33"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reiknight/ld33/issues"
+  },
+  "homepage": "https://github.com/reiknight/ld33",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-connect": "^2.2.0",
+    "gulp-jade": "^1.0.0",
+    "gulp-jshint": "^1.10.0",
+    "gulp-typescript": "~2.8.1"
+  }
+}

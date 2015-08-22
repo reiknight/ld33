@@ -1,0 +1,19 @@
+{
+  "name": "ld33",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reiknight/ld33",
+  "authors": [
+    "beagleknight <david.morcillo@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "~2.4.2"
+  }
+}
