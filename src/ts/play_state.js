@@ -16,7 +16,7 @@ var ld33;
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
-            this.game.world.setBounds(0, 0, 3200, 700);
+            this.game.world.setBounds(0, 0, 3200, 650);
         };
         PlayState.prototype.preload = function () {
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
@@ -35,6 +35,7 @@ var ld33;
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
+            this.camera.bounds.height = 700;
             this.camera.follow(this.player);
             this.cursors = this.game.input.keyboard.createCursorKeys();
         };
