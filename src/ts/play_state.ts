@@ -157,7 +157,7 @@ module ld33 {
             this.playerCanBeSeen = false;
             this.lights.forEach(function(light){
                 if (light.contains(this.player.x, this.player.y)) {
-                    this.player.canBeSeen = true;
+                    this.playerCanBeSeen = true;
                 }
             }, this);
             //Checking input
