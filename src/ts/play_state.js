@@ -19,41 +19,46 @@ var ld33;
             this.game.world.setBounds(0, 0, 3200, 650);
         };
         PlayState.prototype.preload = function () {
-            this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
+            this.game.load.json('level1', '/levels/level1.json');
             this.game.load.image('background', '/assets/background.png');
+            this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
             this.game.load.image('small-table', '/assets/small-table.png');
             this.game.load.image('bed', '/assets/bed.png');
+            this.game.load.image('vase', '/assets/vase.png');
         };
         PlayState.prototype.create = function () {
+            this.levelConfig = this.cache.getJSON('level1');
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 300;
             this.background = this.game.add.image(0, 0, 'background');
-            this.wardrobe = this.game.add.sprite(2810, this.game.world.height, 'wardrobe');
-            this.wardrobe.anchor.setTo(0, 1);
-            this.wardrobe.inputEnabled = true;
-            this.wardrobe.events.onInputDown.add(function (sprite, event) {
-                sprite.frame = (sprite.frame + 1) % 2;
-                this.player.visible = !this.player.visible;
-                if (!this.player.visible) {
-                    this.player.position.x = sprite.x + 250;
-                    this.player.position.y = this.game.world.centerY;
-                    this.player.body.allowGravity = false;
-                }
-                else {
-                    this.player.body.allowGravity = true;
+            this.objects = this.game.add.group();
+            this.levelConfig.objects.forEach(function (object) {
+                var sprite = this.objects.create(object.position.x, object.position.y, object.sprite);
+                sprite.anchor.setTo(0, 1);
+                if (object.sprite === 'wardrobe') {
+                    sprite.inputEnabled = true;
+                    sprite.events.onInputDown.add(function (sprite, event) {
+                        sprite.frame = (sprite.frame + 1) % 2;
+                        if (this.player.alpha === 1) {
+                            this.player.position.x = sprite.x + 250;
+                            this.player.position.y = this.game.world.centerY;
+                            this.player.body.allowGravity = false;
+                            this.player.alpha = 0;
+                        }
+                        else {
+                            this.player.body.allowGravity = true;
+                            this.player.alpha = 1;
+                        }
+                    }, this);
                 }
             }, this);
-            this.smallTable = this.game.add.sprite(2080, this.game.world.height, 'small-table');
-            this.smallTable.anchor.setTo(0, 1);
-            this.bed = this.game.add.sprite(1177, this.game.world.height, 'bed');
-            this.bed.anchor.setTo(0, 1);
-            this.player = this.game.add.sprite(3050, this.game.world.centerY, 'logo');
+            this.player = this.game.add.sprite(this.levelConfig.player.position.x, this.levelConfig.player.position.y, 'logo');
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
             this.camera.bounds.height = 700;
             this.camera.follow(this.player);
-            this.player.visible = false;
+            this.player.alpha = 0;
             this.player.body.allowGravity = false;
             this.cursors = this.game.input.keyboard.createCursorKeys();
         };

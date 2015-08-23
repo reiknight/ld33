@@ -6,7 +6,8 @@ var gulp           = require('gulp'),
     LIB_FILES      = ['bower_components/phaser/build/phaser.min.js'],
     SCRIPT_FILES   = ['src/ts/**/*.ts'],
     TEMPLATE_FILES = ['src/templates/**/*.jade'],
-    ASSET_FILES    = ['src/assets/**/*'];
+    ASSET_FILES    = ['src/assets/**/*'],
+    LEVEL_FILES    = ['src/levels/**/*'];
 
 // gulp.task('lint', function() {
 //     gulp.src(SCRIPT_FILES)
@@ -39,6 +40,12 @@ gulp.task('templates', function () {
         .pipe(connect.reload());
 });
 
+gulp.task('levels', function () {
+    gulp.src(LEVEL_FILES)
+        .pipe(gulp.dest('public/levels'))
+        .pipe(connect.reload());
+});
+
 gulp.task('assets', function () {
     gulp.src(ASSET_FILES)
         .pipe(gulp.dest('public/assets'))
@@ -49,6 +56,7 @@ gulp.task('watch', ['build'], function () {
     gulp.watch(SCRIPT_FILES, ['scripts']);
     gulp.watch(TEMPLATE_FILES, ['templates']);
     gulp.watch(ASSET_FILES, ['assets']);
+    gulp.watch(LEVEL_FILES, ['levels']);
 });
 
 gulp.task('server', function () {
@@ -58,7 +66,7 @@ gulp.task('server', function () {
     });
 });
 
-gulp.task('build', ['templates', 'scripts', 'libs', 'assets']);
+gulp.task('build', ['templates', 'scripts', 'libs', 'assets', 'levels']);
 
 gulp.task('dev', ['watch', 'server']);
 
