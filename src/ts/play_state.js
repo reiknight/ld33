@@ -31,7 +31,7 @@ var ld33;
             this.wardrobe.anchor.setTo(0, 1);
             this.smallTable = this.game.add.sprite(2080, this.game.world.height, 'small-table');
             this.smallTable.anchor.setTo(0, 1);
-            this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
+            this.player = this.game.add.sprite(3050, this.game.world.centerY, 'logo');
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;

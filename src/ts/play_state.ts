@@ -43,7 +43,7 @@ module ld33 {
             this.smallTable.anchor.setTo(0, 1);
 
             //Player creation
-            this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
+            this.player = this.game.add.sprite(3050, this.game.world.centerY, 'logo');
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
