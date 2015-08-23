@@ -33,6 +33,7 @@ module ld33 {
         cursors: Phaser.CursorKeys;
         spaceKey: Phaser.Key;
         objects: Phaser.Group;
+        graphics: Phaser.Graphics;
         PLAYER_VELOCITY_X: number = 300;
         PLAYER_VELOCITY_Y: number = -400;
 
@@ -67,6 +68,7 @@ module ld33 {
 
             // Add background
             this.background = this.game.add.image(0, 0, 'background');
+            this.graphics = this.game.add.graphics(0, 0);
 
             // Add objects
             this.objects = this.game.add.group();
@@ -86,6 +88,11 @@ module ld33 {
 
                 switch (object.sprite) {
                     case 'lamp':
+                      sprite.polygon = new Phaser.Polygon([new Phaser.Point(sprite.position.x + sprite.width/2, sprite.position.y - sprite.height/1.5), new Phaser.Point(sprite.position.x + sprite.width/2 + 450, 700), new Phaser.Point(sprite.position.x + sprite.width/2 - 450, 700)]);
+                      this.graphics.beginFill(0xFFFFFF);
+                      this.graphics.alpha = 0.1;
+                      this.graphics.drawPolygon(sprite.polygon.points);
+                      this.graphics.endFill();
                       sprite.animations.add('light', [0,1,2,3,3,3,2,1,0], 8, true);
                       sprite.play('light');
                       break;

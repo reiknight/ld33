@@ -34,6 +34,7 @@ var ld33;
             this.levelConfig = this.cache.getJSON('level1');
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.background = this.game.add.image(0, 0, 'background');
+            this.graphics = this.game.add.graphics(0, 0);
             this.objects = this.game.add.group();
             this.levelConfig.objects.forEach(function (object) {
                 ;
@@ -48,6 +49,11 @@ var ld33;
                 sprite.castShadow = object.castShadow;
                 switch (object.sprite) {
                     case 'lamp':
+                        sprite.polygon = new Phaser.Polygon([new Phaser.Point(sprite.position.x + sprite.width / 2, sprite.position.y - sprite.height / 1.5), new Phaser.Point(sprite.position.x + sprite.width / 2 + 450, 700), new Phaser.Point(sprite.position.x + sprite.width / 2 - 450, 700)]);
+                        this.graphics.beginFill(0xFFFFFF);
+                        this.graphics.alpha = 0.1;
+                        this.graphics.drawPolygon(sprite.polygon.points);
+                        this.graphics.endFill();
                         sprite.animations.add('light', [0, 1, 2, 3, 3, 3, 2, 1, 0], 8, true);
                         sprite.play('light');
                         break;
