@@ -6,6 +6,7 @@ module ld33 {
         player: Phaser.Sprite;
         cursors: Phaser.CursorKeys;
         wardrobe: Phaser.Sprite;
+        smallTable: Phaser.Sprite;
         PLAYER_VELOCITY: number = 500;
 
         constructor() {
@@ -22,6 +23,7 @@ module ld33 {
         preload() {
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
             this.game.load.image('background', '/assets/background.png');
+            this.game.load.image('small-table', '/assets/small-table.png');
         }
 
         create() {
@@ -38,6 +40,10 @@ module ld33 {
             this.game.time.events.loop(Phaser.Timer.SECOND * 2, function () {
                 this.wardrobe.frame += 1 % 2;
             }, this);
+
+            // Add small table
+            this.smallTable = this.game.add.sprite(2080, this.game.world.height, 'small-table');
+            this.smallTable.anchor.setTo(0, 1);
 
             //Player creation
             this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
