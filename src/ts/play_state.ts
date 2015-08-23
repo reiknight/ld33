@@ -35,11 +35,8 @@ module ld33 {
             this.background = this.game.add.image(0, 0, 'background');
 
             // Add wardrobe
-            this.wardrobe = this.game.add.sprite(this.game.world.width, this.game.world.height, 'wardrobe');
-            this.wardrobe.anchor.setTo(1);
-            this.game.time.events.loop(Phaser.Timer.SECOND * 2, function () {
-                this.wardrobe.frame += 1 % 2;
-            }, this);
+            this.wardrobe = this.game.add.sprite(2810, this.game.world.height, 'wardrobe');
+            this.wardrobe.anchor.setTo(0, 1);
 
             // Add small table
             this.smallTable = this.game.add.sprite(2080, this.game.world.height, 'small-table');
