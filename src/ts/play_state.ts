@@ -46,7 +46,6 @@ module ld33 {
             this.player.body.collideWorldBounds = true;
 
             this.camera.follow(this.player);
-
             //Creating input
             this.cursors = this.game.input.keyboard.createCursorKeys();
         }
