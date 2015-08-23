@@ -30,6 +30,19 @@ var ld33;
             this.background = this.game.add.image(0, 0, 'background');
             this.wardrobe = this.game.add.sprite(2810, this.game.world.height, 'wardrobe');
             this.wardrobe.anchor.setTo(0, 1);
+            this.wardrobe.inputEnabled = true;
+            this.wardrobe.events.onInputDown.add(function (sprite, event) {
+                sprite.frame = (sprite.frame + 1) % 2;
+                this.player.visible = !this.player.visible;
+                if (!this.player.visible) {
+                    this.player.position.x = sprite.x + 250;
+                    this.player.position.y = this.game.world.centerY;
+                    this.player.body.allowGravity = false;
+                }
+                else {
+                    this.player.body.allowGravity = true;
+                }
+            }, this);
             this.smallTable = this.game.add.sprite(2080, this.game.world.height, 'small-table');
             this.smallTable.anchor.setTo(0, 1);
             this.bed = this.game.add.sprite(1177, this.game.world.height, 'bed');
@@ -40,6 +53,8 @@ var ld33;
             this.player.body.collideWorldBounds = true;
             this.camera.bounds.height = 700;
             this.camera.follow(this.player);
+            this.player.visible = false;
+            this.player.body.allowGravity = false;
             this.cursors = this.game.input.keyboard.createCursorKeys();
         };
         PlayState.prototype.update = function () {
