@@ -10,8 +10,8 @@ var ld33;
         __extends(PlayState, _super);
         function PlayState() {
             _super.call(this);
-            this.PLAYER_VELOCITY_X = 500;
-            this.PLAYER_VELOCITY_Y = -315;
+            this.PLAYER_VELOCITY_X = 300;
+            this.PLAYER_VELOCITY_Y = -400;
         }
         PlayState.prototype.init = function () {
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -63,7 +63,7 @@ var ld33;
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
-            this.player.body.gravity.y = 300;
+            this.player.body.gravity.y = 500;
             this.camera.bounds.height = 700;
             this.camera.follow(this.player);
             this.player.alpha = 0;

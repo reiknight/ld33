@@ -26,8 +26,8 @@ module ld33 {
         player: Phaser.Sprite;
         cursors: Phaser.CursorKeys;
         objects: Phaser.Group;
-        PLAYER_VELOCITY_X: number = 500;
-        PLAYER_VELOCITY_Y: number = -315;
+        PLAYER_VELOCITY_X: number = 300;
+        PLAYER_VELOCITY_Y: number = -400;
 
         constructor() {
             super();
@@ -93,7 +93,7 @@ module ld33 {
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
-            this.player.body.gravity.y = 300;
+            this.player.body.gravity.y = 500;
 
             //Camera
             this.camera.bounds.height = 700;
