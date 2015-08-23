@@ -9,6 +9,7 @@ module ld33 {
             offsetY: number
         }
         hideable: boolean;
+        castShadow: boolean;
         position: {
             x: number,
             y: number
@@ -78,7 +79,10 @@ module ld33 {
                 if (object.hideable) {
                     sprite.inputEnabled = true;
                     sprite.events.onInputDown.add(this.hide, this);
+                    sprite.hideable = true;
                 }
+
+                sprite.castShadow = object.castShadow;
 
                 switch (object.sprite) {
                     case 'lamp':
@@ -141,7 +145,7 @@ module ld33 {
             //Checking input
             this.player.body.velocity.x = 0;
 
-            if(this.player.alpha !== 0) {
+            if(this.player.alpha === 1) {
                 if(this.cursors.left.isDown) {
                     this.player.body.velocity.x -= this.PLAYER_VELOCITY_X;
                 }
@@ -158,18 +162,28 @@ module ld33 {
             }
         }
         hide(sprite, event) {
-            if(Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds())) {
-                sprite.frame = (sprite.frame + 1) % 2;
-                if(this.player.alpha === 1) {
-                    this.player.position.x = sprite.x + sprite.width/2;
-                    this.player.position.y = this.game.world.height - sprite.height/3;
-                    this.player.body.velocity.x = 0;
-                    this.player.body.velocity.y = 0;
-                    this.player.body.allowGravity = false;
-                    this.player.alpha = 0;
-                } else {
-                    this.player.body.allowGravity = true;
-                    this.player.alpha = 1;
+            if (sprite.hideable) {
+                if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds())) {
+                    sprite.frame = (sprite.frame + 1) % 2;
+                    if(this.player.alpha === 1) {
+                        this.player.position.x = sprite.x + sprite.width/2;
+                        this.player.position.y = this.game.world.height - sprite.height/3;
+                        this.player.body.velocity.x = 0;
+                        this.player.body.velocity.y = 0;
+                        this.player.body.allowGravity = false;
+                        this.player.alpha = 0;
+                    } else {
+                        this.player.body.allowGravity = true;
+                        this.player.alpha = 1;
+                    }
+                }
+            } else if (sprite.castShadow) {
+                if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds()) && this.player.body.onFloor()) {
+                    if(this.player.alpha === 1) {
+                        this.player.alpha = 0.5;
+                    } else {
+                        this.player.alpha = 1;
+                    }
                 }
             }
         }

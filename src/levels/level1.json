@@ -28,6 +28,7 @@
     {
       "sprite": "bed",
       "collision": true,
+      "castShadow": true,
       "collisionBounds": {
           "height": 90,
           "offsetY": -105
