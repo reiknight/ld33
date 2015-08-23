@@ -1,0 +1,31 @@
+{
+  "player": {
+    "position": {
+      "x": 3050,
+      "y": 600
+    }
+  },
+  "objects": [
+    {
+      "sprite": "wardrobe",
+      "position": {
+        "x": 2810,
+        "y": 700
+      }
+    },
+    {
+      "sprite": "small-table",
+      "position": {
+        "x": 2080,
+        "y": 700
+      }
+    },
+    {
+      "sprite": "bed",
+      "position": {
+        "x": 1177,
+        "y": 700
+      }
+    }
+  ]
+}

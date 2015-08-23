@@ -1,13 +1,30 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts"/>
 
 module ld33 {
+    interface LevelObject {
+        sprite: String;
+        position: {
+            x: number,
+            y: number
+        }
+    }
+
+    interface LevelConfig {
+        player: {
+          position: {
+            x: number,
+            y: number
+          }
+        }
+        objects: Array<LevelObject>;
+    }
+
     export class PlayState extends Phaser.State {
+        levelConfig: LevelConfig;
         background: Phaser.Image;
         player: Phaser.Sprite;
         cursors: Phaser.CursorKeys;
-        wardrobe: Phaser.Sprite;
-        smallTable: Phaser.Sprite;
-        bed: Phaser.Sprite;
+        objects: Phaser.Group;
         PLAYER_VELOCITY: number = 500;
 
         constructor() {
@@ -22,13 +39,16 @@ module ld33 {
         }
 
         preload() {
-            this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
+            this.game.load.json('level1', '/levels/level1.json');
             this.game.load.image('background', '/assets/background.png');
+            this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
             this.game.load.image('small-table', '/assets/small-table.png');
             this.game.load.image('bed', '/assets/bed.png');
         }
 
         create() {
+            this.levelConfig = this.cache.getJSON('level1');
+
             //Physics
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 300;
@@ -36,20 +56,16 @@ module ld33 {
             // Add background
             this.background = this.game.add.image(0, 0, 'background');
 
-            // Add wardrobe
-            this.wardrobe = this.game.add.sprite(2810, this.game.world.height, 'wardrobe');
-            this.wardrobe.anchor.setTo(0, 1);
-
-            // Add small table
-            this.smallTable = this.game.add.sprite(2080, this.game.world.height, 'small-table');
-            this.smallTable.anchor.setTo(0, 1);
-
-            // Add bed
-            this.bed = this.game.add.sprite(1177, this.game.world.height, 'bed');
-            this.bed.anchor.setTo(0, 1);
+            // Add objects
+            this.objects = this.game.add.group();
+            this.levelConfig.objects.forEach(function (object: LevelObject) {
+                this.objects.create(object.position.x, object.position.y, object.sprite);
+                this.objects.setAll('anchor.x', 0);
+                this.objects.setAll('anchor.y', 1);
+            }, this);
 
             //Player creation
-            this.player = this.game.add.sprite(3050, this.game.world.centerY, 'logo');
+            this.player = this.game.add.sprite(this.levelConfig.player.position.x, this.levelConfig.player.position.y, 'logo');
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
