@@ -21,16 +21,16 @@ var ld33;
         PlayState.prototype.preload = function () {
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
             this.game.load.image('background', '/assets/background.png');
+            this.game.load.image('small-table', '/assets/small-table.png');
         };
         PlayState.prototype.create = function () {
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 300;
             this.background = this.game.add.image(0, 0, 'background');
-            this.wardrobe = this.game.add.sprite(this.game.world.width, this.game.world.height, 'wardrobe');
-            this.wardrobe.anchor.setTo(1);
-            this.game.time.events.loop(Phaser.Timer.SECOND * 2, function () {
-                this.wardrobe.frame += 1 % 2;
-            }, this);
+            this.wardrobe = this.game.add.sprite(2810, this.game.world.height, 'wardrobe');
+            this.wardrobe.anchor.setTo(0, 1);
+            this.smallTable = this.game.add.sprite(2080, this.game.world.height, 'small-table');
+            this.smallTable.anchor.setTo(0, 1);
             this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
