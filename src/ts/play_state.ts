@@ -45,6 +45,7 @@ module ld33 {
             this.game.load.json('level1', '/levels/level1.json');
             this.game.load.image('background', '/assets/background.png');
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
+            this.game.load.spritesheet('lamp', '/assets/lamp.png', 200, 200);
             this.game.load.image('small-table', '/assets/small-table.png');
             this.game.load.image('bed', '/assets/bed.png');
             this.game.load.image('vase', '/assets/vase.png');
@@ -70,6 +71,14 @@ module ld33 {
                     sprite.inputEnabled = true;
                     sprite.events.onInputDown.add(this.hide, this);
                 }
+
+                switch (object.sprite) {
+                    case 'lamp':
+                      sprite.animations.add('light', [0,1,2,3,3,3,2,1,0], 8, true);
+                      sprite.play('light');
+                      break;
+                }
+
                 if(object.collision) {
                     this.game.physics.arcade.enableBody(sprite);
                     sprite.body.immovable = true;

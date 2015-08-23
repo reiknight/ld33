@@ -43,6 +43,27 @@
         "x": 30,
         "y": 610
       }
+    },
+    {
+      "sprite": "lamp",
+      "position": {
+        "x": 2450,
+        "y": 310
+      }
+    },
+    {
+      "sprite": "lamp",
+      "position": {
+        "x": 1450,
+        "y": 310
+      }
+    },
+    {
+      "sprite": "lamp",
+      "position": {
+        "x": 450,
+        "y": 310
+      }
     }
   ]
 }
