@@ -10,6 +10,7 @@ var ld33;
         __extends(PlayState, _super);
         function PlayState() {
             _super.call(this);
+            this.lights = [];
             this.PLAYER_VELOCITY_X = 300;
             this.PLAYER_VELOCITY_Y = -400;
         }
@@ -54,6 +55,7 @@ var ld33;
                         this.graphics.alpha = 0.1;
                         this.graphics.drawPolygon(sprite.polygon.points);
                         this.graphics.endFill();
+                        this.lights.push(sprite.polygon);
                         sprite.animations.add('light', [0, 1, 2, 3, 3, 3, 2, 1, 0], 8, true);
                         sprite.play('light');
                         break;
@@ -97,6 +99,12 @@ var ld33;
             this.objects.forEach(function (sprite) {
                 if (sprite.body) {
                     this.game.debug.body(sprite);
+                }
+            }, this);
+            this.playerCanBeSeen = false;
+            this.lights.forEach(function (light) {
+                if (light.contains(this.player.x, this.player.y)) {
+                    this.player.canBeSeen = true;
                 }
             }, this);
             this.player.body.velocity.x = 0;

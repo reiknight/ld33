@@ -30,10 +30,12 @@ module ld33 {
         levelConfig: LevelConfig;
         background: Phaser.Image;
         player: Phaser.Sprite;
+        playerCanBeSeen: boolean;
         cursors: Phaser.CursorKeys;
         spaceKey: Phaser.Key;
         objects: Phaser.Group;
         graphics: Phaser.Graphics;
+        lights: Array<Phaser.Polygon> = [];
         PLAYER_VELOCITY_X: number = 300;
         PLAYER_VELOCITY_Y: number = -400;
 
@@ -93,6 +95,7 @@ module ld33 {
                       this.graphics.alpha = 0.1;
                       this.graphics.drawPolygon(sprite.polygon.points);
                       this.graphics.endFill();
+                      this.lights.push(sprite.polygon);
                       sprite.animations.add('light', [0,1,2,3,3,3,2,1,0], 8, true);
                       sprite.play('light');
                       break;
@@ -141,12 +144,20 @@ module ld33 {
         }
 
         update() {
+
             //Checking collisions
             this.game.physics.arcade.collide(this.player, this.objects);
 
             this.objects.forEach(function(sprite) {
                 if(sprite.body) {
                     this.game.debug.body(sprite);
+                }
+            }, this);
+
+            this.playerCanBeSeen = false;
+            this.lights.forEach(function(light){
+                if (light.contains(this.player.x, this.player.y)) {
+                    this.player.canBeSeen = true;
                 }
             }, this);
             //Checking input
