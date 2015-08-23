@@ -4,6 +4,10 @@ module ld33 {
     interface LevelObject {
         sprite: String;
         collision: boolean;
+        collisionBounds: {
+            height: number,
+            offsetY: number
+        }
         hideable: boolean;
         position: {
             x: number,
@@ -26,6 +30,7 @@ module ld33 {
         background: Phaser.Image;
         player: Phaser.Sprite;
         cursors: Phaser.CursorKeys;
+        spaceKey: Phaser.Key;
         objects: Phaser.Group;
         PLAYER_VELOCITY_X: number = 300;
         PLAYER_VELOCITY_Y: number = -400;
@@ -53,6 +58,7 @@ module ld33 {
         }
 
         create() {
+            var spaceKey;
             this.levelConfig = this.cache.getJSON('level1');
 
             //Physics
@@ -63,8 +69,10 @@ module ld33 {
 
             // Add objects
             this.objects = this.game.add.group();
-            this.levelConfig.objects.forEach(function (object: LevelObject) {
+            this.levelConfig.objects.forEach(function (object: LevelObject) {;
                 var sprite = this.objects.create(object.position.x, object.position.y, object.sprite);
+                var bodyHeight,
+                    bodyOffsetY;
                 sprite.anchor.setTo(0, 1);
 
                 if (object.hideable) {
@@ -79,8 +87,19 @@ module ld33 {
                       break;
                 }
 
-                if(object.collision) {
+                if (object.collision) {
+                    this.debugSprite = sprite;
                     this.game.physics.arcade.enableBody(sprite);
+                    bodyHeight = sprite.height;
+                    if (object.collisionBounds && object.collisionBounds.height) {
+                        if (object.collisionBounds.height > 0) {
+                            bodyHeight = object.collisionBounds.height;
+                        } else {
+                            bodyHeight += object.collisionBounds.height;
+                        }
+                    }
+                    bodyOffsetY = object.collisionBounds && object.collisionBounds.offsetY ? object.collisionBounds.offsetY : 0;
+                    sprite.body.setSize(sprite.width, bodyHeight, 0, bodyOffsetY);
                     sprite.body.immovable = true;
                 }
             }, this);
@@ -102,12 +121,23 @@ module ld33 {
 
             //Creating input
             this.cursors = this.game.input.keyboard.createCursorKeys();
+            this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            this.spaceKey.onDown.add(function(e) {
+                this.objects.forEach(function(sprite) {
+                    this.hide(sprite, this.player);
+                }, this);
+            }, this);
         }
 
         update() {
             //Checking collisions
             this.game.physics.arcade.collide(this.player, this.objects);
 
+            this.objects.forEach(function(sprite) {
+                if(sprite.body) {
+                    this.game.debug.body(sprite);
+                }
+            }, this);
             //Checking input
             this.player.body.velocity.x = 0;
 

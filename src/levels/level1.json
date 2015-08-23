@@ -17,6 +17,9 @@
     {
       "sprite": "small-table",
       "collision": true,
+      "collisionBounds": {
+          "height": -15
+      },
       "position": {
         "x": 2200,
         "y": 700
@@ -24,6 +27,11 @@
     },
     {
       "sprite": "bed",
+      "collision": true,
+      "collisionBounds": {
+          "height": 90,
+          "offsetY": -105
+      },
       "position": {
         "x": 1177,
         "y": 700

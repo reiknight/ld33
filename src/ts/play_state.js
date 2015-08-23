@@ -30,12 +30,15 @@ var ld33;
             this.game.load.image('door', '/assets/door.png');
         };
         PlayState.prototype.create = function () {
+            var spaceKey;
             this.levelConfig = this.cache.getJSON('level1');
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.background = this.game.add.image(0, 0, 'background');
             this.objects = this.game.add.group();
             this.levelConfig.objects.forEach(function (object) {
+                ;
                 var sprite = this.objects.create(object.position.x, object.position.y, object.sprite);
+                var bodyHeight, bodyOffsetY;
                 sprite.anchor.setTo(0, 1);
                 if (object.hideable) {
                     sprite.inputEnabled = true;
@@ -48,7 +51,19 @@ var ld33;
                         break;
                 }
                 if (object.collision) {
+                    this.debugSprite = sprite;
                     this.game.physics.arcade.enableBody(sprite);
+                    bodyHeight = sprite.height;
+                    if (object.collisionBounds && object.collisionBounds.height) {
+                        if (object.collisionBounds.height > 0) {
+                            bodyHeight = object.collisionBounds.height;
+                        }
+                        else {
+                            bodyHeight += object.collisionBounds.height;
+                        }
+                    }
+                    bodyOffsetY = object.collisionBounds && object.collisionBounds.offsetY ? object.collisionBounds.offsetY : 0;
+                    sprite.body.setSize(sprite.width, bodyHeight, 0, bodyOffsetY);
                     sprite.body.immovable = true;
                 }
             }, this);
@@ -62,9 +77,20 @@ var ld33;
             this.player.alpha = 0;
             this.player.body.allowGravity = false;
             this.cursors = this.game.input.keyboard.createCursorKeys();
+            this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            this.spaceKey.onDown.add(function (e) {
+                this.objects.forEach(function (sprite) {
+                    this.hide(sprite, this.player);
+                }, this);
+            }, this);
         };
         PlayState.prototype.update = function () {
             this.game.physics.arcade.collide(this.player, this.objects);
+            this.objects.forEach(function (sprite) {
+                if (sprite.body) {
+                    this.game.debug.body(sprite);
+                }
+            }, this);
             this.player.body.velocity.x = 0;
             if (this.player.alpha !== 0) {
                 if (this.cursors.left.isDown) {
