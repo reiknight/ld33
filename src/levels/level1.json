@@ -1,7 +1,7 @@
 {
   "player": {
     "position": {
-      "x": 3050,
+      "x": 0,
       "y": 600
     }
   },
@@ -16,7 +16,7 @@
     {
       "sprite": "small-table",
       "position": {
-        "x": 2080,
+        "x": 2200,
         "y": 700
       }
     },
@@ -25,6 +25,13 @@
       "position": {
         "x": 1177,
         "y": 700
+      }
+    },
+    {
+      "sprite": "vase",
+      "position": {
+        "x": 616,
+        "y": 600
       }
     }
   ]

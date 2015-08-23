@@ -24,6 +24,7 @@ var ld33;
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
             this.game.load.image('small-table', '/assets/small-table.png');
             this.game.load.image('bed', '/assets/bed.png');
+            this.game.load.image('vase', '/assets/vase.png');
         };
         PlayState.prototype.create = function () {
             this.levelConfig = this.cache.getJSON('level1');
