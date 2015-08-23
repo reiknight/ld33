@@ -47,6 +47,7 @@ module ld33 {
             this.game.load.image('small-table', '/assets/small-table.png');
             this.game.load.image('bed', '/assets/bed.png');
             this.game.load.image('vase', '/assets/vase.png');
+            this.game.load.image('door', '/assets/door.png');
         }
 
         create() {
