@@ -10,18 +10,32 @@ var ld33;
         __extends(PlayState, _super);
         function PlayState() {
             _super.call(this);
-            this.PLAYER_VELOCITY = 100;
+            this.PLAYER_VELOCITY = 500;
         }
+        PlayState.prototype.init = function () {
+            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignVertically = true;
+            this.game.world.setBounds(0, 0, 3200, 700);
+        };
         PlayState.prototype.preload = function () {
-            this.game.load.image('logo', 'phaser2.png');
+            this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
+            this.game.load.image('background', '/assets/background.png');
         };
         PlayState.prototype.create = function () {
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 300;
+            this.background = this.game.add.image(0, 0, 'background');
+            this.wardrobe = this.game.add.sprite(this.game.world.width, this.game.world.height, 'wardrobe');
+            this.wardrobe.anchor.setTo(1);
+            this.game.time.events.loop(Phaser.Timer.SECOND * 2, function () {
+                this.wardrobe.frame += 1 % 2;
+            }, this);
             this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
+            this.camera.follow(this.player);
             this.cursors = this.game.input.keyboard.createCursorKeys();
         };
         PlayState.prototype.update = function () {
