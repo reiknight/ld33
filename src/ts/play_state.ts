@@ -44,6 +44,7 @@ module ld33 {
             this.game.load.json('level1', '/levels/level1.json');
             this.game.load.image('background', '/assets/background.png');
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
+            this.game.load.spritesheet('lamp', '/assets/lamp.png', 200, 200);
             this.game.load.image('small-table', '/assets/small-table.png');
             this.game.load.image('bed', '/assets/bed.png');
             this.game.load.image('vase', '/assets/vase.png');
@@ -65,22 +66,31 @@ module ld33 {
                 var sprite = this.objects.create(object.position.x, object.position.y, object.sprite);
                 sprite.anchor.setTo(0, 1);
 
+                switch (object.sprite) {
+                    case 'wardrobe':
+                        sprite.inputEnabled = true;
+                        sprite.events.onInputDown.add(function(sprite, event) {
+                            sprite.frame = (sprite.frame + 1) % 2;
+                            if(this.player.alpha === 1) {
+                                this.player.position.x = sprite.x + 250;
+                                this.player.position.y = this.game.world.centerY + 50;
+                                this.player.body.velocity.x = 0;
+                                this.player.body.velocity.y = 0;
+                                this.player.body.allowGravity = false;
+                                this.player.alpha = 0;
+                            } else {
+                                this.player.body.allowGravity = true;
+                                this.player.alpha = 1;
+                            }
+                        }, this);
+                        break;
+                    case 'lamp':
+                      sprite.animations.add('light', [0,1,2,3,3,3,2,1,0], 8, true);
+                      sprite.play('light');
+                      break
+                }
                 if (object.sprite === 'wardrobe') {
-                    sprite.inputEnabled = true;
-                    sprite.events.onInputDown.add(function(sprite, event) {
-                        sprite.frame = (sprite.frame + 1) % 2;
-                        if(this.player.alpha === 1) {
-                            this.player.position.x = sprite.x + 250;
-                            this.player.position.y = this.game.world.centerY + 50;
-                            this.player.body.velocity.x = 0;
-                            this.player.body.velocity.y = 0;
-                            this.player.body.allowGravity = false;
-                            this.player.alpha = 0;
-                        } else {
-                            this.player.body.allowGravity = true;
-                            this.player.alpha = 1;
-                        }
-                    }, this);
+
                 }
                 if(object.collision) {
                     this.game.physics.arcade.enableBody(sprite);
