@@ -33,8 +33,6 @@ module ld33 {
             //Checking input
             this.player.body.velocity.x = 0;
 
-            console.log(this.PLAYER_VELOCITY);
-
             if(this.cursors.left.isDown) {
                 this.player.body.velocity.x -= this.PLAYER_VELOCITY;
             }

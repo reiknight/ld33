@@ -3,8 +3,6 @@
 
 module ld33 {
   export class SimpleGame extends Phaser.Game {
-      game: Phaser.Game;
-
       constructor() {
           super(800, 600, Phaser.AUTO, 'content');
           this.state.add('play', new PlayState());
