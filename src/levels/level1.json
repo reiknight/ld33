@@ -2,12 +2,13 @@
   "player": {
     "position": {
       "x": 3050,
-      "y": 350
+      "y": 475
     }
   },
   "objects": [
     {
       "sprite": "wardrobe",
+      "hideable": true,
       "position": {
         "x": 2810,
         "y": 700
@@ -30,6 +31,7 @@
     },
     {
       "sprite": "vase",
+      "hideable": true,
       "position": {
         "x": 616,
         "y": 600

@@ -36,23 +36,9 @@ var ld33;
             this.levelConfig.objects.forEach(function (object) {
                 var sprite = this.objects.create(object.position.x, object.position.y, object.sprite);
                 sprite.anchor.setTo(0, 1);
-                if (object.sprite === 'wardrobe') {
+                if (object.hideable) {
                     sprite.inputEnabled = true;
-                    sprite.events.onInputDown.add(function (sprite, event) {
-                        sprite.frame = (sprite.frame + 1) % 2;
-                        if (this.player.alpha === 1) {
-                            this.player.position.x = sprite.x + 250;
-                            this.player.position.y = this.game.world.centerY + 50;
-                            this.player.body.velocity.x = 0;
-                            this.player.body.velocity.y = 0;
-                            this.player.body.allowGravity = false;
-                            this.player.alpha = 0;
-                        }
-                        else {
-                            this.player.body.allowGravity = true;
-                            this.player.alpha = 1;
-                        }
-                    }, this);
+                    sprite.events.onInputDown.add(this.hide, this);
                 }
                 if (object.collision) {
                     this.game.physics.arcade.enableBody(sprite);
@@ -84,6 +70,23 @@ var ld33;
                     if (this.cursors.up.isDown) {
                         this.player.body.velocity.y = this.PLAYER_VELOCITY_Y;
                     }
+                }
+            }
+        };
+        PlayState.prototype.hide = function (sprite, event) {
+            if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds())) {
+                sprite.frame = (sprite.frame + 1) % 2;
+                if (this.player.alpha === 1) {
+                    this.player.position.x = sprite.x + sprite.width / 2;
+                    this.player.position.y = this.game.world.height - sprite.height / 3;
+                    this.player.body.velocity.x = 0;
+                    this.player.body.velocity.y = 0;
+                    this.player.body.allowGravity = false;
+                    this.player.alpha = 0;
+                }
+                else {
+                    this.player.body.allowGravity = true;
+                    this.player.alpha = 1;
                 }
             }
         };
