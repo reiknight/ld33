@@ -40,7 +40,8 @@ var ld33;
             this.background = this.game.add.image(0, 0, 'background');
             this.graphics = this.game.add.graphics(0, 0);
             this.music = this.game.add.audio('music');
-            this.music.volume = 0.2;
+            this.music.volume = 0.4;
+            this.music.loop = true;
             this.music.play();
             this.objects = this.game.add.group();
             this.levelConfig.objects.forEach(function (object) {
@@ -105,6 +106,14 @@ var ld33;
                 this.objects.forEach(function (sprite) {
                     this.hide(sprite, this.player);
                 }, this);
+            }, this);
+            this.game.input.keyboard.addKey(Phaser.Keyboard.S).onDown.add(function (e) {
+                if (this.music.isPlaying) {
+                    this.music.pause();
+                }
+                else {
+                    this.music.resume();
+                }
             }, this);
         };
         PlayState.prototype.update = function () {

@@ -79,7 +79,7 @@
   ],
   "texts": [
       {
-          "text": "You can hide and show with SPACEBAR\nand move with LEFT and RIGHT arrow.",
+          "text": "You can hide and show with SPACEBAR\nand move with LEFT and RIGHT arrow.\n\nS key for play or pause music.",
           "minX": 2450,
           "maxX": 3500
       },
