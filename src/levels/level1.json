@@ -49,8 +49,8 @@
       "sprite": "door",
       "end": true,
       "position": {
-        "x": 30,
-        "y": 610
+        "x": -20,
+        "y": 700
       }
     },
     {
