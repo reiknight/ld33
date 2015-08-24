@@ -205,11 +205,11 @@ module ld33 {
             this.graphics.drawPolygon(this.enemyVision.points);
             this.graphics.endFill();
 
-            this.objects.forEach(function(sprite) {
+            /*this.objects.forEach(function(sprite) {
                 if(sprite.body) {
                     this.game.debug.body(sprite);
                 }
-            }, this);
+            }, this);*/
 
             this.playerCanBeSeen = false;
             this.lights.forEach(function(light){
