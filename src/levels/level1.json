@@ -95,6 +95,16 @@
           "maxX": 2100
       },
       {
+          "text": "Press DOWN for be smaller.",
+          "minX": 1450,
+          "maxX": 1850
+      },
+      {
+          "text": "Press DOWN again for recover\nyour size.",
+          "minX": 850,
+          "maxX": 1100
+      },
+      {
           "text": "Hide in the vase with\nSPACEBAR.",
           "minX": 600,
           "maxX": 800

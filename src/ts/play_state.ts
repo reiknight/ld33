@@ -151,7 +151,7 @@ module ld33 {
 
             //Player creation
             this.player = this.game.add.sprite(this.levelConfig.player.position.x, this.levelConfig.player.position.y, 'player');
-            this.player.anchor.setTo(0.5);
+            this.player.anchor.setTo(0.5, 1);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
             this.player.body.gravity.y = 500;
@@ -185,10 +185,20 @@ module ld33 {
                     this.music.resume();
                 }
             }, this);
+            this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(function(e) {
+                if (this.player.scale.y === 0.35) {
+                    this.player.scale.setTo(1);
+                } else {
+                    this.player.scale.setTo(0.35);
+                }
+            }, this);
         }
 
         update() {
             this.game.physics.arcade.collide(this.player, this.objects);
+            this.game.physics.arcade.overlap(this.player, this.objects, function(player) {
+                player.scale.setTo(0.35);
+            });
 
             this.enemy.position.x += 1;
             this.enemyVision.setTo([
@@ -247,7 +257,7 @@ module ld33 {
                 }
 
                 if (this.player.body.onFloor() || this.player.body.touching.down) {
-                    if(this.cursors.up.isDown) {
+                    if (this.cursors.up.isDown) {
                         this.player.body.velocity.y = this.PLAYER_VELOCITY_Y;
                     }
                 }
