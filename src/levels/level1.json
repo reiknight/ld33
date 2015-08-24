@@ -76,5 +76,27 @@
         "y": 310
       }
     }
+  ],
+  "texts": [
+      {
+          "text": "You can hide and show with SPACEBAR\nand move with LEFT and RIGHT arrow.",
+          "minX": 2450,
+          "maxX": 3500
+      },
+      {
+          "text": "Jump with UP arrow",
+          "minX": 2100,
+          "maxX": 2450
+      },
+      {
+          "text": "Hide in shadows with\nSPACEBAR",
+          "minX": 1850,
+          "maxX": 2100
+      },
+      {
+          "text": "Hide in the vase with\nSPACEBAR",
+          "minX": 600,
+          "maxX": 800
+      }
   ]
 }

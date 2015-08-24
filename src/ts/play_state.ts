@@ -24,6 +24,13 @@ module ld33 {
           }
         }
         objects: Array<LevelObject>;
+        texts: Array<TextAdvice>;
+    }
+
+    interface TextAdvice {
+        text: string;
+        minX: number;
+        maxX: number;
     }
 
     export class PlayState extends Phaser.State {
@@ -37,6 +44,7 @@ module ld33 {
         graphics: Phaser.Graphics;
         lights: Array<Phaser.Polygon> = [];
         music: Phaser.Sound;
+        texts: Array<{text: Phaser.Text, min: number, max: number}> = [];
         PLAYER_VELOCITY_X: number = 300;
         PLAYER_VELOCITY_Y: number = -400;
 
@@ -61,6 +69,7 @@ module ld33 {
             this.game.load.image('vase', '/assets/vase.png');
             this.game.load.image('door', '/assets/door.png');
             this.game.load.audio('music', '/assets/music.ogg');
+            this.game.load.bitmapFont('carrier_command', '/assets/fonts/carrier_command.png', '/assets/fonts/carrier_command.xml');
         }
 
         create() {
@@ -81,7 +90,7 @@ module ld33 {
 
             // Add objects
             this.objects = this.game.add.group();
-            this.levelConfig.objects.forEach(function (object: LevelObject) {;
+            this.levelConfig.objects.forEach(function (object: LevelObject) {
                 var sprite = this.objects.create(object.position.x, object.position.y, object.sprite);
                 var bodyHeight,
                     bodyOffsetY;
@@ -92,8 +101,6 @@ module ld33 {
                     sprite.events.onInputDown.add(this.hide, this);
                     sprite.hideable = true;
                 }
-
-                sprite.castShadow = object.castShadow;
 
                 switch (object.sprite) {
                     case 'lamp':
@@ -123,6 +130,17 @@ module ld33 {
                     sprite.body.setSize(sprite.width, bodyHeight, 0, bodyOffsetY);
                     sprite.body.immovable = true;
                 }
+            }, this);
+
+            //Add texts
+            this.levelConfig.texts.forEach(function (text: TextAdvice) {
+                var textAdvice = {
+                    text: this.game.add.bitmapText(text.minX, 300, 'carrier_command', text.text, 18),
+                    min: text.minX,
+                    max: text.maxX
+                };
+                textAdvice.text.visible = false;
+                this.texts.push(textAdvice);
             }, this);
 
             //Player creation
@@ -165,6 +183,14 @@ module ld33 {
             this.lights.forEach(function(light){
                 if (light.contains(this.player.x, this.player.y)) {
                     this.playerCanBeSeen = true;
+                }
+            }, this);
+            //Showing texts
+            this.texts.forEach(function(textAdvice) {
+                if (this.player.position.x > textAdvice.min && this.player.position.x < textAdvice.max) {
+                    textAdvice.text.visible = true;
+                } else {
+                    textAdvice.text.visible = false;
                 }
             }, this);
             //Checking input

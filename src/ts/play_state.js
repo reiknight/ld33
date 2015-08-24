@@ -11,6 +11,7 @@ var ld33;
         function PlayState() {
             _super.call(this);
             this.lights = [];
+            this.texts = [];
             this.PLAYER_VELOCITY_X = 300;
             this.PLAYER_VELOCITY_Y = -400;
         }
@@ -30,6 +31,7 @@ var ld33;
             this.game.load.image('vase', '/assets/vase.png');
             this.game.load.image('door', '/assets/door.png');
             this.game.load.audio('music', '/assets/music.ogg');
+            this.game.load.bitmapFont('carrier_command', '/assets/fonts/carrier_command.png', '/assets/fonts/carrier_command.xml');
         };
         PlayState.prototype.create = function () {
             var spaceKey;
@@ -42,7 +44,6 @@ var ld33;
             this.music.play();
             this.objects = this.game.add.group();
             this.levelConfig.objects.forEach(function (object) {
-                ;
                 var sprite = this.objects.create(object.position.x, object.position.y, object.sprite);
                 var bodyHeight, bodyOffsetY;
                 sprite.anchor.setTo(0, 1);
@@ -51,7 +52,6 @@ var ld33;
                     sprite.events.onInputDown.add(this.hide, this);
                     sprite.hideable = true;
                 }
-                sprite.castShadow = object.castShadow;
                 switch (object.sprite) {
                     case 'lamp':
                         sprite.polygon = new Phaser.Polygon(object.polygon);
@@ -81,6 +81,15 @@ var ld33;
                     sprite.body.immovable = true;
                 }
             }, this);
+            this.levelConfig.texts.forEach(function (text) {
+                var textAdvice = {
+                    text: this.game.add.bitmapText(text.minX, 300, 'carrier_command', text.text, 18),
+                    min: text.minX,
+                    max: text.maxX
+                };
+                textAdvice.text.visible = false;
+                this.texts.push(textAdvice);
+            }, this);
             this.player = this.game.add.sprite(this.levelConfig.player.position.x, this.levelConfig.player.position.y, 'logo');
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
@@ -109,6 +118,14 @@ var ld33;
             this.lights.forEach(function (light) {
                 if (light.contains(this.player.x, this.player.y)) {
                     this.playerCanBeSeen = true;
+                }
+            }, this);
+            this.texts.forEach(function (textAdvice) {
+                if (this.player.position.x > textAdvice.min && this.player.position.x < textAdvice.max) {
+                    textAdvice.text.visible = true;
+                }
+                else {
+                    textAdvice.text.visible = false;
                 }
             }, this);
             this.player.body.velocity.x = 0;
