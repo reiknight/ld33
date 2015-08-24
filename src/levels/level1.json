@@ -84,17 +84,17 @@
           "maxX": 3500
       },
       {
-          "text": "Jump with UP arrow",
+          "text": "Jump with UP arrow.",
           "minX": 2100,
           "maxX": 2450
       },
       {
-          "text": "Hide in shadows with\nSPACEBAR",
+          "text": "Hide in shadows with\nSPACEBAR when no jumping.",
           "minX": 1850,
           "maxX": 2100
       },
       {
-          "text": "Hide in the vase with\nSPACEBAR",
+          "text": "Hide in the vase with\nSPACEBAR.",
           "minX": 600,
           "maxX": 800
       }
