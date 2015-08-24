@@ -46,6 +46,7 @@ module ld33 {
         lights: Array<Phaser.Polygon> = [];
         music: Phaser.Sound;
         texts: Array<{text: Phaser.Text, min: number, max: number}> = [];
+        enemyVision: Phaser.Polygon;
         PLAYER_VELOCITY_X: number = 300;
         PLAYER_VELOCITY_Y: number = -400;
 
@@ -88,7 +89,8 @@ module ld33 {
 
             //Add music
             this.music = this.game.add.audio('music');
-            this.music.volume = 0.2;
+            this.music.volume = 0.4;
+            this.music.loop = true;
             this.music.play();
 
             // Add objects
@@ -156,6 +158,11 @@ module ld33 {
             //Enemy creation
             this.enemy = this.game.add.sprite(300, 400, 'enemy');
             this.enemy.anchor.setTo(0.5);
+            this.enemyVision = new Phaser.Polygon([100, 350, 800, -200, 800, 900]);
+            this.graphics.beginFill(0xFF0000);
+            this.graphics.alpha = 0.1;
+            this.graphics.drawPolygon(this.enemyVision.points);
+            this.graphics.endFill();
 
             //Camera
             this.camera.bounds.height = 700;
@@ -173,11 +180,17 @@ module ld33 {
                     this.hide(sprite, this.player);
                 }, this);
             }, this);
+
+            this.game.input.keyboard.addKey(Phaser.Keyboard.S).onDown.add(function(e) {
+                if (this.music.isPlaying) {
+                    this.music.pause();
+                } else {
+                    this.music.resume();
+                }
+            }, this);
         }
 
         update() {
-
-            //Checking collisions
             this.game.physics.arcade.collide(this.player, this.objects);
 
             this.objects.forEach(function(sprite) {

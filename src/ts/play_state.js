@@ -42,7 +42,8 @@ var ld33;
             this.background = this.game.add.image(0, 0, 'background');
             this.graphics = this.game.add.graphics(0, 0);
             this.music = this.game.add.audio('music');
-            this.music.volume = 0.2;
+            this.music.volume = 0.4;
+            this.music.loop = true;
             this.music.play();
             this.objects = this.game.add.group();
             this.levelConfig.objects.forEach(function (object) {
@@ -99,6 +100,11 @@ var ld33;
             this.player.body.gravity.y = 500;
             this.enemy = this.game.add.sprite(300, 400, 'enemy');
             this.enemy.anchor.setTo(0.5);
+            this.enemyVision = new Phaser.Polygon([100, 350, 800, -200, 800, 900]);
+            this.graphics.beginFill(0xFF0000);
+            this.graphics.alpha = 0.1;
+            this.graphics.drawPolygon(this.enemyVision.points);
+            this.graphics.endFill();
             this.camera.bounds.height = 700;
             this.camera.follow(this.player);
             this.player.alpha = 0;
@@ -109,6 +115,14 @@ var ld33;
                 this.objects.forEach(function (sprite) {
                     this.hide(sprite, this.player);
                 }, this);
+            }, this);
+            this.game.input.keyboard.addKey(Phaser.Keyboard.S).onDown.add(function (e) {
+                if (this.music.isPlaying) {
+                    this.music.pause();
+                }
+                else {
+                    this.music.resume();
+                }
             }, this);
         };
         PlayState.prototype.update = function () {
