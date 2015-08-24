@@ -9,6 +9,7 @@ module ld33 {
             offsetY: number
         }
         hideable: boolean;
+        end: boolean;
         polygon: Array<number>;
         position: {
             x: number,
@@ -106,7 +107,7 @@ module ld33 {
                     sprite.events.onInputDown.add(this.hide, this);
                     sprite.hideable = true;
                 }
-
+                sprite.end = object.end;
                 switch (object.sprite) {
                     case 'lamp':
                       sprite.polygon = new Phaser.Polygon(object.polygon);
@@ -150,7 +151,7 @@ module ld33 {
 
             //Player creation
             this.player = this.game.add.sprite(this.levelConfig.player.position.x, this.levelConfig.player.position.y, 'player');
-            this.player.anchor.setTo(0.5);
+            this.player.anchor.setTo(0.5, 1);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
             this.player.body.gravity.y = 500;
@@ -184,19 +185,29 @@ module ld33 {
                     this.music.resume();
                 }
             }, this);
+            this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(function(e) {
+                if (this.player.scale.y === 0.35) {
+                    this.player.scale.setTo(1);
+                } else {
+                    this.player.scale.setTo(0.35);
+                }
+            }, this);
         }
 
         update() {
             this.game.physics.arcade.collide(this.player, this.objects);
+            this.game.physics.arcade.overlap(this.player, this.objects, function(player) {
+                player.scale.setTo(0.35);
+            });
 
             this.enemy.position.x += 1;
             this.enemyVision.setTo([
               this.enemy.position.x,
               this.enemy.top + 100,
-              this.enemy.position.x + 400,
-              this.enemy.top - 250,
-              this.enemy.position.x + 400,
-              this.enemy.top + 350
+              this.enemy.position.x + 800,
+              this.enemy.top - 900,
+              this.enemy.position.x + 800,
+              this.enemy.top + 1100
             ]);
 
             this.graphics.clear();
@@ -213,10 +224,18 @@ module ld33 {
 
             this.playerCanBeSeen = false;
             this.lights.forEach(function(light){
+                this.graphics.beginFill(0xFFFFFF);
+                this.graphics.alpha = 0.1;
+                this.graphics.drawPolygon(light.points);
+                this.graphics.endFill();
                 if (light.contains(this.player.x, this.player.y)) {
                     this.playerCanBeSeen = true;
                 }
             }, this);
+
+            if (this.enemyVision.contains(this.player.x, this.player.y) && this.player.alpha === 1) {
+                console.log('YOU LOSE!!!');
+            }
             //Showing texts
             this.texts.forEach(function(textAdvice) {
                 if (this.player.position.x > textAdvice.min && this.player.position.x < textAdvice.max) {
@@ -238,7 +257,7 @@ module ld33 {
                 }
 
                 if (this.player.body.onFloor() || this.player.body.touching.down) {
-                    if(this.cursors.up.isDown) {
+                    if (this.cursors.up.isDown) {
                         this.player.body.velocity.y = this.PLAYER_VELOCITY_Y;
                     }
                 }
@@ -267,6 +286,10 @@ module ld33 {
                         this.player.body.allowGravity = true;
                         this.player.alpha = 1;
                     }
+                }
+            } else if (sprite.end) {
+                if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds())) {
+                    console.log("You win!!!");
                 }
             }
         }
