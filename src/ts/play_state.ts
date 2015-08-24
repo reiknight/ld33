@@ -91,7 +91,7 @@ module ld33 {
             this.music = this.game.add.audio('music');
             this.music.volume = 0.4;
             this.music.loop = true;
-            this.music.play();
+            /*this.music.play();*/
 
             // Add objects
             this.objects = this.game.add.group();
@@ -159,10 +159,6 @@ module ld33 {
             this.enemy = this.game.add.sprite(300, 400, 'enemy');
             this.enemy.anchor.setTo(0.5);
             this.enemyVision = new Phaser.Polygon([100, 350, 800, -200, 800, 900]);
-            this.graphics.beginFill(0xFF0000);
-            this.graphics.alpha = 0.1;
-            this.graphics.drawPolygon(this.enemyVision.points);
-            this.graphics.endFill();
 
             //Camera
             this.camera.bounds.height = 700;
@@ -192,6 +188,22 @@ module ld33 {
 
         update() {
             this.game.physics.arcade.collide(this.player, this.objects);
+
+            this.enemy.position.x += 1;
+            this.enemyVision.setTo([
+              this.enemy.position.x,
+              this.enemy.top + 100,
+              this.enemy.position.x + 400,
+              this.enemy.top - 250,
+              this.enemy.position.x + 400,
+              this.enemy.top + 350
+            ]);
+
+            this.graphics.clear();
+            this.graphics.beginFill(0xFF0000);
+            this.graphics.alpha = 0.1;
+            this.graphics.drawPolygon(this.enemyVision.points);
+            this.graphics.endFill();
 
             this.objects.forEach(function(sprite) {
                 if(sprite.body) {
