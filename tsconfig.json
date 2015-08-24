@@ -25,7 +25,11 @@
         "./bower_components/phaser/typescript/phaser.d.ts",
         "./bower_components/phaser/typescript/pixi.comments.d.ts",
         "./bower_components/phaser/typescript/pixi.d.ts",
+        "./src/ts/credits_state.ts",
         "./src/ts/game.ts",
-        "./src/ts/play_state.ts"
+        "./src/ts/how_to_play_state.ts",
+        "./src/ts/play_state.ts",
+        "./src/ts/preload_state.ts",
+        "./src/ts/start_state.ts"
     ]
 }
