@@ -45,6 +45,7 @@ module ld33 {
         lights: Array<Phaser.Polygon> = [];
         music: Phaser.Sound;
         texts: Array<{text: Phaser.Text, min: number, max: number}> = [];
+        enemyVision: Phaser.Polygon;
         PLAYER_VELOCITY_X: number = 300;
         PLAYER_VELOCITY_Y: number = -400;
 
@@ -151,6 +152,13 @@ module ld33 {
             this.player.body.collideWorldBounds = true;
             this.player.body.gravity.y = 500;
 
+            //Enemy creation
+            this.enemyVision = new Phaser.Polygon([100, 350, 800, -200, 800, 900]);
+            this.graphics.beginFill(0xFF0000);
+            this.graphics.alpha = 0.1;
+            this.graphics.drawPolygon(this.enemyVision.points);
+            this.graphics.endFill();
+
             //Camera
             this.camera.bounds.height = 700;
             this.camera.follow(this.player);
@@ -178,8 +186,6 @@ module ld33 {
         }
 
         update() {
-
-            //Checking collisions
             this.game.physics.arcade.collide(this.player, this.objects);
 
             this.objects.forEach(function(sprite) {
