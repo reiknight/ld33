@@ -46,6 +46,8 @@ module ld33 {
         graphics: Phaser.Graphics;
         lights: Array<Phaser.Polygon> = [];
         music: Phaser.Sound;
+        jumpSound: Phaser.Sound;
+        hideSound: Phaser.Sound;
         texts: Array<{text: Phaser.Text, min: number, max: number}> = [];
         enemyVision: Phaser.Polygon;
         PLAYER_VELOCITY_X: number = 300;
@@ -74,6 +76,8 @@ module ld33 {
             this.game.load.image('vase', '/assets/vase.png');
             this.game.load.image('door', '/assets/door.png');
             this.game.load.audio('music', '/assets/music.ogg');
+            this.game.load.audio('jump', '/assets/jump.wav');
+            this.game.load.audio('hide', '/assets/hide.wav');
             this.game.load.bitmapFont('carrier_command', '/assets/fonts/carrier_command.png', '/assets/fonts/carrier_command.xml');
         }
 
@@ -88,10 +92,12 @@ module ld33 {
             this.background = this.game.add.image(0, 0, 'background');
             this.graphics = this.game.add.graphics(0, 0);
 
-            //Add music
+            //Add music and FX
             this.music = this.game.add.audio('music');
             this.music.volume = 0.4;
             this.music.loop = true;
+            this.jumpSound = this.game.add.audio('jump');
+            this.hideSound = this.game.add.audio('hide');
             /*this.music.play();*/
 
             // Add objects
@@ -259,14 +265,17 @@ module ld33 {
                 if (this.player.body.onFloor() || this.player.body.touching.down) {
                     if (this.cursors.up.isDown) {
                         this.player.body.velocity.y = this.PLAYER_VELOCITY_Y;
+                        this.jumpSound.play();
                     }
                 }
             }
             if (this.spaceKey.justDown) {
                 if (this.player.alpha === 1 && !this.playerCanBeSeen && (this.player.body.onFloor() || this.player.body.touching.down)) {
                     this.player.alpha = 0.5;
+                    this.hideSound.play();
                 } else if(this.player.alpha === 0.5) {
                     this.player.alpha = 1;
+                    this.hideSound.play();
                 }
             }
         }
@@ -275,6 +284,7 @@ module ld33 {
             if (sprite.hideable) {
                 if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds())) {
                     sprite.frame = (sprite.frame + 1) % 2;
+                    this.hideSound.play();
                     if(this.player.alpha === 1) {
                         this.player.position.x = sprite.x + sprite.width/2;
                         this.player.position.y = this.game.world.height - sprite.height/3;
