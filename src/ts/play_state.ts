@@ -215,7 +215,7 @@ module ld33 {
                 this.enemyDirection = 1;
                 this.enemy.scale.setTo(1);
             }
-            this.enemy.position.x += this.enemyDirection*3;
+            this.enemy.position.x += this.enemyDirection*5;
             this.enemyVision.setTo([
               this.enemy.position.x,
               this.enemy.top + 100,
