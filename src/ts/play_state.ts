@@ -125,7 +125,7 @@ module ld33 {
                       this.graphics.drawPolygon(sprite.polygon.points);
                       this.graphics.endFill();
                       this.lights.push(sprite.polygon);
-                      sprite.animations.add('light', [0,1,2,3,3,3,2,1,0], 8, true);
+                      sprite.animations.add('light', [0,1], 8, true);
                       sprite.play('light');
                       break;
                 }
