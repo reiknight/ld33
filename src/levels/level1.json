@@ -28,7 +28,6 @@
     {
       "sprite": "bed",
       "collision": true,
-      "castShadow": true,
       "collisionBounds": {
           "height": 90,
           "offsetY": -105
@@ -55,6 +54,7 @@
     },
     {
       "sprite": "lamp",
+      "polygon": [2550, 190, 2275, 500, 2400, 700, 3000, 700],
       "position": {
         "x": 2450,
         "y": 310
@@ -62,6 +62,7 @@
     },
     {
       "sprite": "lamp",
+      "polygon": [1550, 190, 1250, 520, 1770, 520, 1770, 700, 2000, 700],
       "position": {
         "x": 1450,
         "y": 310
@@ -69,6 +70,7 @@
     },
     {
       "sprite": "lamp",
+      "polygon": [550, 190, 100, 700, 1000, 700],
       "position": {
         "x": 450,
         "y": 310

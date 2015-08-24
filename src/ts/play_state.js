@@ -29,6 +29,7 @@ var ld33;
             this.game.load.image('bed', '/assets/bed.png');
             this.game.load.image('vase', '/assets/vase.png');
             this.game.load.image('door', '/assets/door.png');
+            this.game.load.audio('music', '/assets/music.ogg');
         };
         PlayState.prototype.create = function () {
             var spaceKey;
@@ -36,6 +37,9 @@ var ld33;
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.background = this.game.add.image(0, 0, 'background');
             this.graphics = this.game.add.graphics(0, 0);
+            this.music = this.game.add.audio('music');
+            this.music.volume = 0.2;
+            this.music.play();
             this.objects = this.game.add.group();
             this.levelConfig.objects.forEach(function (object) {
                 ;
@@ -50,7 +54,7 @@ var ld33;
                 sprite.castShadow = object.castShadow;
                 switch (object.sprite) {
                     case 'lamp':
-                        sprite.polygon = new Phaser.Polygon([new Phaser.Point(sprite.position.x + sprite.width / 2, sprite.position.y - sprite.height / 1.5), new Phaser.Point(sprite.position.x + sprite.width / 2 + 450, 700), new Phaser.Point(sprite.position.x + sprite.width / 2 - 450, 700)]);
+                        sprite.polygon = new Phaser.Polygon(object.polygon);
                         this.graphics.beginFill(0xFFFFFF);
                         this.graphics.alpha = 0.1;
                         this.graphics.drawPolygon(sprite.polygon.points);
@@ -121,6 +125,14 @@ var ld33;
                     }
                 }
             }
+            if (this.spaceKey.justDown) {
+                if (this.player.alpha === 1 && !this.playerCanBeSeen && (this.player.body.onFloor() || this.player.body.touching.down)) {
+                    this.player.alpha = 0.5;
+                }
+                else if (this.player.alpha === 0.5) {
+                    this.player.alpha = 1;
+                }
+            }
         };
         PlayState.prototype.hide = function (sprite, event) {
             if (sprite.hideable) {
@@ -136,16 +148,6 @@ var ld33;
                     }
                     else {
                         this.player.body.allowGravity = true;
-                        this.player.alpha = 1;
-                    }
-                }
-            }
-            else if (sprite.castShadow) {
-                if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds()) && this.player.body.onFloor()) {
-                    if (this.player.alpha === 1) {
-                        this.player.alpha = 0.5;
-                    }
-                    else {
                         this.player.alpha = 1;
                     }
                 }

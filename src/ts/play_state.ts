@@ -9,7 +9,7 @@ module ld33 {
             offsetY: number
         }
         hideable: boolean;
-        castShadow: boolean;
+        polygon: Array<number>;
         position: {
             x: number,
             y: number
@@ -36,6 +36,7 @@ module ld33 {
         objects: Phaser.Group;
         graphics: Phaser.Graphics;
         lights: Array<Phaser.Polygon> = [];
+        music: Phaser.Sound;
         PLAYER_VELOCITY_X: number = 300;
         PLAYER_VELOCITY_Y: number = -400;
 
@@ -59,6 +60,7 @@ module ld33 {
             this.game.load.image('bed', '/assets/bed.png');
             this.game.load.image('vase', '/assets/vase.png');
             this.game.load.image('door', '/assets/door.png');
+            this.game.load.audio('music', '/assets/music.ogg');
         }
 
         create() {
@@ -71,6 +73,11 @@ module ld33 {
             // Add background
             this.background = this.game.add.image(0, 0, 'background');
             this.graphics = this.game.add.graphics(0, 0);
+
+            //Add music
+            this.music = this.game.add.audio('music');
+            this.music.volume = 0.2;
+            this.music.play();
 
             // Add objects
             this.objects = this.game.add.group();
@@ -90,7 +97,7 @@ module ld33 {
 
                 switch (object.sprite) {
                     case 'lamp':
-                      sprite.polygon = new Phaser.Polygon([new Phaser.Point(sprite.position.x + sprite.width/2, sprite.position.y - sprite.height/1.5), new Phaser.Point(sprite.position.x + sprite.width/2 + 450, 700), new Phaser.Point(sprite.position.x + sprite.width/2 - 450, 700)]);
+                      sprite.polygon = new Phaser.Polygon(object.polygon);
                       this.graphics.beginFill(0xFFFFFF);
                       this.graphics.alpha = 0.1;
                       this.graphics.drawPolygon(sprite.polygon.points);
@@ -163,22 +170,30 @@ module ld33 {
             //Checking input
             this.player.body.velocity.x = 0;
 
-            if(this.player.alpha === 1) {
-                if(this.cursors.left.isDown) {
+            if (this.player.alpha === 1) {
+                if (this.cursors.left.isDown) {
                     this.player.body.velocity.x -= this.PLAYER_VELOCITY_X;
                 }
 
-                if(this.cursors.right.isDown) {
+                if (this.cursors.right.isDown) {
                     this.player.body.velocity.x += this.PLAYER_VELOCITY_X;
                 }
 
-                if(this.player.body.onFloor() || this.player.body.touching.down) {
+                if (this.player.body.onFloor() || this.player.body.touching.down) {
                     if(this.cursors.up.isDown) {
                         this.player.body.velocity.y = this.PLAYER_VELOCITY_Y;
                     }
                 }
             }
+            if (this.spaceKey.justDown) {
+                if (this.player.alpha === 1 && !this.playerCanBeSeen && (this.player.body.onFloor() || this.player.body.touching.down)) {
+                    this.player.alpha = 0.5;
+                } else if(this.player.alpha === 0.5) {
+                    this.player.alpha = 1;
+                }
+            }
         }
+
         hide(sprite, event) {
             if (sprite.hideable) {
                 if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds())) {
@@ -192,14 +207,6 @@ module ld33 {
                         this.player.alpha = 0;
                     } else {
                         this.player.body.allowGravity = true;
-                        this.player.alpha = 1;
-                    }
-                }
-            } else if (sprite.castShadow) {
-                if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds()) && this.player.body.onFloor()) {
-                    if(this.player.alpha === 1) {
-                        this.player.alpha = 0.5;
-                    } else {
                         this.player.alpha = 1;
                     }
                 }
