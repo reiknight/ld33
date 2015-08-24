@@ -80,32 +80,32 @@
   ],
   "texts": [
       {
-          "text": "You can hide and show with SPACEBAR\nand move with LEFT and RIGHT arrow.\n\nS key for play or pause music.",
+          "text": "Press the SPACEBAR key to leave\nthe wardrobe. Move using the LEFT\nand RIGHT arrows.\n\nS key for enable/disable music.",
           "minX": 2450,
           "maxX": 3500
       },
       {
-          "text": "Jump with UP arrow.",
+          "text": "Jump using UP arrow.",
           "minX": 2100,
           "maxX": 2450
       },
       {
-          "text": "Hide in shadows with\nSPACEBAR when no jumping.",
+          "text": "Hide in the shadows using \nSPACEBAR when you are\non the floor.",
           "minX": 1850,
           "maxX": 2100
       },
       {
-          "text": "Press DOWN for be smaller.",
+          "text": "Press DOWN to crouch.\nRemember to hide in the shadows!",
           "minX": 1450,
           "maxX": 1850
       },
       {
-          "text": "Press DOWN again for recover\nyour size.",
+          "text": "Press DOWN again to stand up.",
           "minX": 850,
           "maxX": 1100
       },
       {
-          "text": "Hide in the vase with\nSPACEBAR.",
+          "text": "Hide in the vase using\nSPACEBAR.",
           "minX": 600,
           "maxX": 800
       },
