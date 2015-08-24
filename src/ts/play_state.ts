@@ -50,6 +50,7 @@ module ld33 {
         hideSound: Phaser.Sound;
         texts: Array<{text: Phaser.Text, min: number, max: number}> = [];
         enemyVision: Phaser.Polygon;
+        enemyDirection: number = 1;
         PLAYER_VELOCITY_X: number = 300;
         PLAYER_VELOCITY_Y: number = -400;
 
@@ -205,16 +206,21 @@ module ld33 {
             this.game.physics.arcade.overlap(this.player, this.objects, function(player) {
                 player.scale.setTo(0.35);
             });
-
-            this.enemy.position.x += 1;
+            if (this.enemy.position.x > 1500) {
+                this.enemyDirection = -1;
+            } else if(this.enemy.position.x < 500) {
+                this.enemyDirection = 1;
+            }
+            this.enemy.position.x += this.enemyDirection*3;
             this.enemyVision.setTo([
               this.enemy.position.x,
               this.enemy.top + 100,
-              this.enemy.position.x + 800,
+              this.enemy.position.x + this.enemyDirection * 800,
               this.enemy.top - 900,
-              this.enemy.position.x + 800,
+              this.enemy.position.x + this.enemyDirection * 800,
               this.enemy.top + 1100
             ]);
+
 
             this.graphics.clear();
             this.graphics.beginFill(0xFF0000);
