@@ -47,6 +47,7 @@
     },
     {
       "sprite": "door",
+      "end": true,
       "position": {
         "x": 30,
         "y": 610
@@ -97,6 +98,11 @@
           "text": "Hide in the vase with\nSPACEBAR.",
           "minX": 600,
           "maxX": 800
+      },
+      {
+          "text": "Press SPACEBAR near the door\nto scape.",
+          "minX": 30,
+          "maxX": 300
       }
   ]
 }
