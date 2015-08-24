@@ -37,6 +37,7 @@ module ld33 {
         levelConfig: LevelConfig;
         background: Phaser.Image;
         player: Phaser.Sprite;
+        enemy: Phaser.Sprite;
         playerCanBeSeen: boolean;
         cursors: Phaser.CursorKeys;
         spaceKey: Phaser.Key;
@@ -64,6 +65,8 @@ module ld33 {
             this.game.load.image('background', '/assets/background.png');
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
             this.game.load.spritesheet('lamp', '/assets/lamp.png', 200, 200);
+            this.game.load.image('player', '/assets/monstruo.png');
+            this.game.load.image('enemy', '/assets/enemy.png');
             this.game.load.image('small-table', '/assets/small-table.png');
             this.game.load.image('bed', '/assets/bed.png');
             this.game.load.image('vase', '/assets/vase.png');
@@ -144,11 +147,15 @@ module ld33 {
             }, this);
 
             //Player creation
-            this.player = this.game.add.sprite(this.levelConfig.player.position.x, this.levelConfig.player.position.y, 'logo');
+            this.player = this.game.add.sprite(this.levelConfig.player.position.x, this.levelConfig.player.position.y, 'player');
             this.player.anchor.setTo(0.5);
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
             this.player.body.gravity.y = 500;
+
+            //Enemy creation
+            this.enemy = this.game.add.sprite(300, 400, 'enemy');
+            this.enemy.anchor.setTo(0.5);
 
             //Camera
             this.camera.bounds.height = 700;
