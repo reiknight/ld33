@@ -208,8 +208,10 @@ module ld33 {
             });
             if (this.enemy.position.x > 1500) {
                 this.enemyDirection = -1;
+                this.enemy.scale.setTo(-1, 1);
             } else if(this.enemy.position.x < 500) {
                 this.enemyDirection = 1;
+                this.enemy.scale.setTo(1);
             }
             this.enemy.position.x += this.enemyDirection*3;
             this.enemyVision.setTo([
