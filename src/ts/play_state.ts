@@ -98,7 +98,9 @@ module ld33 {
             this.music.volume = 0.4;
             this.music.loop = true;
             this.jumpSound = this.game.add.audio('jump');
+            this.jumpSound.volume = 0.2;
             this.hideSound = this.game.add.audio('hide');
+            this.hideSound.volume = 0.2;
             /*this.music.play();*/
 
             // Add objects
