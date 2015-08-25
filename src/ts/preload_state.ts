@@ -16,6 +16,7 @@ module ld33 {
         preload() {
             this.game.load.json('level1', '/levels/level1.json');
             this.game.load.image('background', '/assets/background.png');
+            this.game.load.image('bed_legs', '/assets/bed_legs.png');
             this.game.load.spritesheet('wardrobe', '/assets/wardrobe.png', 500, 700);
             this.game.load.spritesheet('lamp', '/assets/lamp.png', 200, 200);
             this.game.load.image('player', '/assets/monstruo.png');

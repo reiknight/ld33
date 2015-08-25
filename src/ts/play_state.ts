@@ -36,7 +36,8 @@ module ld33 {
 
     export class PlayState extends Phaser.State {
         levelConfig: LevelConfig;
-        background: Phaser.Image;
+        background: Phaser.Sprite;
+        bedLegs: Phaser.Image;
         player: Phaser.Sprite;
         enemy: Phaser.Sprite;
         playerCanBeSeen: boolean;
@@ -144,6 +145,13 @@ module ld33 {
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
             this.player.body.gravity.y = 500;
+
+            // Add bed legs in front
+            var bedConfig = this.levelConfig.objects.filter(function (object: LevelObject) {
+                return object.sprite === 'bed';
+            })[0];
+            this.bedLegs = this.game.add.sprite(bedConfig.position.x, bedConfig.position.y, 'bed_legs');
+            this.bedLegs.anchor.setTo(0, 1);
 
             //Enemy creation
             this.enemy = this.game.add.sprite(300, 400, 'enemy');

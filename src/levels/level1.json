@@ -90,7 +90,7 @@
           "maxX": 2450
       },
       {
-          "text": "Don't touch the black focus when\nyou are not hidden!\nHide in the shadows using \nSPACEBAR when you are\non the floor.",
+          "text": "Hide in the shadows using \nSPACEBAR when you are\non the floor.\n\nDon't touch the black spotlight when\nyou are not hidden!\n",
           "minX": 1850,
           "maxX": 2300
       },
