@@ -243,6 +243,7 @@ module ld33 {
             this.graphics.alpha = 0.2;
 
             if (this.enemyVision.contains(this.player.x, this.player.y) && this.player.alpha === 1) {
+                this.music.stop();
                 this.game.state.start('play', true, false);
             }
             //Showing texts
@@ -309,6 +310,7 @@ module ld33 {
                 }
             } else if (sprite.end) {
                 if (Phaser.Rectangle.intersects(this.player.getBounds(), sprite.getBounds())) {
+                    this.music.stop();
                     this.game.state.start('credits');
                 }
             }
