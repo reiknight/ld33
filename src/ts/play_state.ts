@@ -156,6 +156,8 @@ module ld33 {
             //Enemy creation
             this.enemy = this.game.add.sprite(300, 400, 'enemy');
             this.enemy.anchor.setTo(0.5);
+            this.enemy.animations.add('walk', [0,1,2,3], 8, true);
+            this.enemy.play('walk');
             this.enemyVision = new Phaser.Polygon([100, 350, 800, -200, 800, 900]);
 
             //Camera
@@ -235,7 +237,7 @@ module ld33 {
                 }
             }, this);
 
-            this.graphics.alpha = 0.3;
+            this.graphics.alpha = 0.2;
 
             if (this.enemyVision.contains(this.player.x, this.player.y) && this.player.alpha === 1) {
                 this.game.state.start('play', true, false);
