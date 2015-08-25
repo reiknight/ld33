@@ -186,10 +186,12 @@ module ld33 {
                 }
             }, this);
             this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(function(e) {
-                if (this.player.scale.y === 0.35) {
-                    this.player.scale.setTo(1);
+                if (this.player.crouched) {
+                    this.player.scale.y = 1;
+                    this.player.crouched = false;
                 } else {
-                    this.player.scale.setTo(0.35);
+                    this.player.scale.y = 0.35;
+                    this.player.crouched = true;
                 }
             }, this);
         }
@@ -257,12 +259,12 @@ module ld33 {
             if (this.player.alpha === 1) {
                 if (this.cursors.left.isDown) {
                     this.player.body.velocity.x -= this.PLAYER_VELOCITY_X;
-                    this.player.scale.setTo(1, 1);
+                    this.player.scale.setTo(1, this.player.crouched ? 0.35 : 1);
                     this.player.play('walk');
                 } else {
                   if (this.cursors.right.isDown) {
                       this.player.body.velocity.x += this.PLAYER_VELOCITY_X;
-                      this.player.scale.setTo(-1, 1);
+                      this.player.scale.setTo(-1, this.player.crouched ? 0.35 : 1);
                       this.player.play('walk');
                   } else {
                       this.player.animations.stop('walk');
@@ -276,6 +278,7 @@ module ld33 {
                     }
                 }
             }
+
             if (this.spaceKey.justDown) {
                 if (this.player.alpha === 1 && !this.playerCanBeSeen && (this.player.body.onFloor() || this.player.body.touching.down)) {
                     this.player.alpha = 0.5;
