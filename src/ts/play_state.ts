@@ -36,8 +36,8 @@ module ld33 {
 
     export class PlayState extends Phaser.State {
         levelConfig: LevelConfig;
-        background: Phaser.Sprite;
-        bedLegs: Phaser.Image;
+        background: Phaser.Image;
+        bedLegs: Phaser.Sprite;
         player: Phaser.Sprite;
         enemy: Phaser.Sprite;
         playerCanBeSeen: boolean;
