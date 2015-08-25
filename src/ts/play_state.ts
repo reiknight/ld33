@@ -82,7 +82,7 @@ module ld33 {
             this.jumpSound.volume = 0.2;
             this.hideSound = this.game.add.audio('hide');
             this.hideSound.volume = 0.2;
-            /*this.music.play();*/
+            this.music.play();
 
             // Add objects
             this.objects = this.game.add.group();
