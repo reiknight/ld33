@@ -86,13 +86,13 @@
       },
       {
           "text": "Jump using UP arrow.",
-          "minX": 2100,
+          "minX": 2300,
           "maxX": 2450
       },
       {
-          "text": "Hide in the shadows using \nSPACEBAR when you are\non the floor.",
+          "text": "Don't touch the black focus when\nyou are not hidden!\nHide in the shadows using \nSPACEBAR when you are\non the floor.",
           "minX": 1850,
-          "maxX": 2100
+          "maxX": 2300
       },
       {
           "text": "Press DOWN to crouch.\nRemember to hide in the shadows!",

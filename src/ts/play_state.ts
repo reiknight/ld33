@@ -100,7 +100,7 @@ module ld33 {
                 switch (object.sprite) {
                     case 'lamp':
                       sprite.polygon = new Phaser.Polygon(object.polygon);
-                      this.graphics.beginFill(0xFFFFFF);
+                      this.graphics.beginFill(0xcacaee);
                       this.graphics.alpha = 0.1;
                       this.graphics.drawPolygon(sprite.polygon.points);
                       this.graphics.endFill();
@@ -188,7 +188,7 @@ module ld33 {
             this.game.physics.arcade.overlap(this.player, this.objects, function(player) {
                 player.scale.setTo(0.35);
             });
-            if (this.enemy.position.x > 1500) {
+            if (this.enemy.position.x > 1250) {
                 this.enemyDirection = -1;
                 this.enemy.scale.setTo(-1, 1);
             } else if(this.enemy.position.x < 500) {
@@ -207,8 +207,7 @@ module ld33 {
 
 
             this.graphics.clear();
-            this.graphics.beginFill(0xFF0000);
-            this.graphics.alpha = 0.1;
+            this.graphics.beginFill(0x000000);
             this.graphics.drawPolygon(this.enemyVision.points);
             this.graphics.endFill();
 
@@ -221,13 +220,14 @@ module ld33 {
             this.playerCanBeSeen = false;
             this.lights.forEach(function(light){
                 this.graphics.beginFill(0xFFFFFF);
-                this.graphics.alpha = 0.1;
                 this.graphics.drawPolygon(light.points);
                 this.graphics.endFill();
                 if (light.contains(this.player.x, this.player.y)) {
                     this.playerCanBeSeen = true;
                 }
             }, this);
+
+            this.graphics.alpha = 0.3;
 
             if (this.enemyVision.contains(this.player.x, this.player.y) && this.player.alpha === 1) {
                 this.game.state.start('play', true, false);
