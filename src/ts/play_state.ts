@@ -145,6 +145,7 @@ module ld33 {
             this.game.physics.arcade.enableBody(this.player);
             this.player.body.collideWorldBounds = true;
             this.player.body.gravity.y = 500;
+            this.player.animations.add('walk', [0,1,2,3], 8, true);
 
             // Add bed legs in front
             var bedConfig = this.levelConfig.objects.filter(function (object: LevelObject) {
@@ -256,10 +257,16 @@ module ld33 {
             if (this.player.alpha === 1) {
                 if (this.cursors.left.isDown) {
                     this.player.body.velocity.x -= this.PLAYER_VELOCITY_X;
-                }
-
-                if (this.cursors.right.isDown) {
-                    this.player.body.velocity.x += this.PLAYER_VELOCITY_X;
+                    this.player.scale.setTo(1, 1);
+                    this.player.play('walk');
+                } else {
+                  if (this.cursors.right.isDown) {
+                      this.player.body.velocity.x += this.PLAYER_VELOCITY_X;
+                      this.player.scale.setTo(-1, 1);
+                      this.player.play('walk');
+                  } else {
+                      this.player.animations.stop('walk');
+                  }
                 }
 
                 if (this.player.body.onFloor() || this.player.body.touching.down) {

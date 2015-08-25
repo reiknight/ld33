@@ -14,7 +14,7 @@ module ld33 {
             this.game.load.image('bed_legs', 'assets/bed_legs.png');
             this.game.load.spritesheet('wardrobe', 'assets/wardrobe.png', 500, 700);
             this.game.load.spritesheet('lamp', 'assets/lamp.png', 200, 200);
-            this.game.load.image('player', 'assets/monstruo.png');
+            this.game.load.spritesheet('player', 'assets/monstruo.png', 60, 150);
             this.game.load.spritesheet('enemy', 'assets/enemy.png', 150, 600);
             this.game.load.image('small-table', 'assets/small-table.png');
             this.game.load.image('bed', 'assets/bed.png');
